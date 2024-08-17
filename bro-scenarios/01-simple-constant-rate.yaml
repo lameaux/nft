@@ -1,0 +1,14 @@
+name: Simple Constant Rate Example
+httpClient:
+  timeout: 1s
+scenarios:
+  - name: Constant rate demo
+    rate: 50
+    interval: 1s
+    duration: 5s
+    vus: 20
+    httpRequest:
+      url: http://mox:8080/static
+      method: get
+    httpResponse:
+      code: 200

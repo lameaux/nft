@@ -1,0 +1,13 @@
+{
+    "request": {
+      "method": "get",
+      "url": "/static"
+    },
+    "response": {
+      "status": 200,
+      "jsonBody": {
+        "msg": "OK"
+      }
+    }
+  }
+  
