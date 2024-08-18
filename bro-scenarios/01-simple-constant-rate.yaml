@@ -10,6 +10,9 @@ scenarios:
       method: get
     httpResponse:
       code: 200
+    validate:
+      failed:
+        eq: 0
   - name: 1k RPS
     rate: 1000
     interval: 1s
@@ -20,3 +23,6 @@ scenarios:
       method: get
     httpResponse:
       code: 200
+    validate:
+      failed:
+        eq: 0
