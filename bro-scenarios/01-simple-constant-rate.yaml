@@ -1,6 +1,6 @@
 name: Simple Constant Rate Demo
 scenarios:
-  - name: low RPS
+  - name: 100 RPS
     rate: 100
     interval: 1s
     duration: 5s
@@ -10,7 +10,7 @@ scenarios:
       method: get
     httpResponse:
       code: 200
-  - name: high RPS
+  - name: 1k RPS
     rate: 1000
     interval: 1s
     duration: 15s
