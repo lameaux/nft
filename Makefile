@@ -2,6 +2,7 @@ DEBUG := false
 METRICS_PORT := 9090
 BRO_FLAGS = --skipBanner --debug=$(DEBUG) --metricsPort=$(METRICS_PORT)
 BRO_RUN = docker-compose run bro $(BRO_FLAGS)
+BACKENDS = mox nginx
 
 .PHONY: all
 all: test
@@ -9,11 +10,11 @@ all: test
 .PHONY: test
 test: start-backends run-tests stop-backends
 
-.PHONY: mox-start
+.PHONY: start-backends
 start-backends:
-	docker-compose up mox nginx -d --wait
+	docker-compose up $(BACKENDS) -d --wait
 
-.PHONY: mox-stop
+.PHONY: stop-backends
 stop-backends:
 	docker-compose down
 

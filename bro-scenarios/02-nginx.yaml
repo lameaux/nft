@@ -13,3 +13,16 @@ scenarios:
     validate:
       failed:
         eq: 0
+  - name: 1k RPS
+    rate: 1000
+    interval: 1s
+    duration: 5s
+    vus: 100
+    httpRequest:
+      url: http://nginx:80/
+      method: GET
+    httpResponse:
+      code: 200
+    validate:
+      failed:
+        eq: 0
