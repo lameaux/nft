@@ -7,7 +7,7 @@ scenarios:
     vus: 20
     httpRequest:
       url: http://mox:8080/static
-      method: get
+      method: GET
     httpResponse:
       code: 200
     validate:
@@ -16,7 +16,7 @@ scenarios:
   - name: 1k RPS
     rate: 1000
     interval: 1s
-    duration: 15s
+    duration: 5s
     vus: 100
     httpRequest:
       url: http://mox:8080/static

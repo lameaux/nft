@@ -1,0 +1,15 @@
+name: Pinging nginx
+scenarios:
+  - name: 100 RPS
+    rate: 100
+    interval: 1s
+    duration: 5s
+    vus: 20
+    httpRequest:
+      url: http://nginx:80/
+      method: GET
+    httpResponse:
+      code: 200
+    validate:
+      failed:
+        eq: 0

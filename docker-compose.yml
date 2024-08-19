@@ -1,20 +1,17 @@
 version: '3.9'
 services:
+  bro:
+    image: ghcr.io/lameaux/bro:latest
+    volumes:
+      - ./bro-scenarios:/scenarios
   mox:
     image: ghcr.io/lameaux/mox:latest
-    command: ["--debug"]    
-    ports:
-      - "8080:8080"
-      - "8081:8081"
-      - "9090:9090"      
-    environment:
-      - ENV_VAR_NAME=value
+    command: ["--debug"]
     volumes:
       - ./mox-mappings:/mappings
     restart: "unless-stopped"
-  bro:
-    image: ghcr.io/lameaux/bro:latest
-    ports:
-      - "9090:9090"
+  nginx:
+    image: nginx:alpine
     volumes:
-      - ./bro-scenarios:/scenarios
+      - ./nginx/html:/usr/share/nginx/html
+    restart: "unless-stopped"

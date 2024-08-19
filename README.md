@@ -2,6 +2,8 @@
 
 Using [bro](https://github.com/lameaux/bro) and [mox](https://github.com/lameaux/mox) for non-functional testing:
 
+Make sure you have `make`, `docker` and `docker-compose` installed in your system.
+
 ```shell
 make test
 
