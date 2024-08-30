@@ -3,7 +3,7 @@ scenarios:
   - name: 1k from index
     rps: 1000
     duration: 5s
-    vus: 100
+    threads: 100
     httpRequest:
       url: http://nginx:80/
     checks:
