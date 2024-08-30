@@ -1,0 +1,16 @@
+name: nginx
+scenarios:
+  - name: 1k from index
+    rps: 1000
+    duration: 5s
+    vus: 100
+    httpRequest:
+      url: http://nginx:80/
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "Hello from nginx"
+      - type: httpHeader
+        name: Content-Type
+        equals: text/html

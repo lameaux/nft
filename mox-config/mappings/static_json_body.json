@@ -1,11 +1,11 @@
 {
     "request": {
-      "method": "get",
+      "method": "GET",
       "url": "/static"
     },
     "response": {
       "status": 200,
-      "jsonBody": {
+      "json": {
         "msg": "OK"
       }
     }

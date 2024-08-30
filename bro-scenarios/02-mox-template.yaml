@@ -1,0 +1,28 @@
+name: Mox Now Template
+scenarios:
+  - name: 1k from template
+    rps: 1000
+    duration: 5s
+    vus: 100
+    httpRequest:
+      url: http://mox:8080/now
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "This text is from 'template' attribute"
+  - name: 1k from template file
+    rps: 1000
+    duration: 5s
+    vus: 100
+    httpRequest:
+      url: http://mox:8080/now.html
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "This html text is coming from 'now.html' template"
+      - type: httpHeader
+        name: Content-Type
+        equals: text/html
+

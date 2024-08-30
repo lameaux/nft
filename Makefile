@@ -23,9 +23,12 @@ run-tests: run-test-mox run-test-nginx
 
 .PHONY: run-test-mox
 run-test-mox:
-	$(BRO_RUN) ./scenarios/01-simple-constant-rate.yaml
+	$(BRO_RUN) ./scenarios/00-mox-static-json.yaml
+	$(BRO_RUN) ./scenarios/01-mox-plain.yaml
+	$(BRO_RUN) ./scenarios/02-mox-template.yaml
 
 .PHONY: run-test-nginx
 run-test-nginx:
-	$(BRO_RUN) ./scenarios/02-nginx.yaml
+	$(BRO_RUN) ./scenarios/03-nginx.yaml
+	$(BRO_RUN) ./scenarios/04-nginx-vs-mox.yaml
 

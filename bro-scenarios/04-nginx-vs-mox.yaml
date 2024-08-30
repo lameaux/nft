@@ -1,0 +1,30 @@
+name: nginx vs mox
+scenarios:
+  - name: 1k from nginx
+    rps: 1000
+    duration: 5s
+    vus: 100
+    httpRequest:
+      url: http://nginx:80/
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "Hello from nginx"
+      - type: httpHeader
+        name: Content-Type
+        equals: text/html
+  - name: 1k from mox
+    rps: 1000
+    duration: 5s
+    vus: 100
+    httpRequest:
+      url: http://mox:8080/index.html
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "Hello from mox"
+      - type: httpHeader
+        name: Content-Type
+        equals: text/html
