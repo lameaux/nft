@@ -17,7 +17,7 @@ scenarios:
   - name: 1k from mox
     rps: 1000
     duration: 5s
-    vus: 100
+    threads: 100
     httpRequest:
       url: http://mox:8080/index.html
     checks:

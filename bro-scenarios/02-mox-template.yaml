@@ -14,7 +14,7 @@ scenarios:
   - name: 1k from template file
     rps: 1000
     duration: 5s
-    vus: 100
+    threads: 100
     httpRequest:
       url: http://mox:8080/now.html
     checks:
