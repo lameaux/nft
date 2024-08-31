@@ -2,7 +2,7 @@ name: Mox Now Template
 scenarios:
   - name: 1k from template
     rps: 1000
-    duration: 5s
+    duration: 10s
     threads: 100
     httpRequest:
       url: http://mox:8080/now
@@ -13,7 +13,7 @@ scenarios:
         contains: "This text is from 'template' attribute"
   - name: 1k from template file
     rps: 1000
-    duration: 5s
+    duration: 10s
     threads: 100
     httpRequest:
       url: http://mox:8080/now.html

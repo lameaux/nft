@@ -30,5 +30,5 @@ run-test-mox:
 .PHONY: run-test-nginx
 run-test-nginx:
 	$(BRO_RUN) ./scenarios/03-nginx-vs-mox.yaml
-	$(BRO_RUN) ./scenarios/04-nginx-mox-downstream.yaml
+	$(BRO_RUN) ./scenarios/04-nginx-calls-mox.yaml
 

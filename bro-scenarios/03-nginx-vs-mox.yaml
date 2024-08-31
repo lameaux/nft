@@ -2,7 +2,7 @@ name: nginx vs mox
 scenarios:
   - name: 1k nginx
     rps: 1000
-    duration: 5s
+    duration: 10s
     threads: 100
     httpRequest:
       url: http://nginx:80/index.html
@@ -16,7 +16,7 @@ scenarios:
         equals: text/html
   - name: 1k mox
     rps: 1000
-    duration: 5s
+    duration: 10s
     threads: 100
     httpRequest:
       url: http://mox:8080/index.html

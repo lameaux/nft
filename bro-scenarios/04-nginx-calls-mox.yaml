@@ -2,7 +2,7 @@ name: nginx downstream mox
 scenarios:
   - name: 1k nginx to mox
     rps: 1000
-    duration: 5s
+    duration: 10s
     threads: 100
     httpRequest:
       url: http://nginx:80/mox/index.html

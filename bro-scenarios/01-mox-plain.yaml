@@ -2,7 +2,7 @@ name: Mox Plain
 scenarios:
   - name: 1k from body
     rps: 1000
-    duration: 5s
+    duration: 10s
     threads: 100
     httpRequest:
       url: http://mox:8080/plain
@@ -13,7 +13,7 @@ scenarios:
         contains: "This plain text is coming from 'body' attribute"
   - name: 1k from file
     rps: 1000
-    duration: 5s
+    duration: 10s
     threads: 100
     httpRequest:
       url: http://mox:8080/plain.txt
