@@ -13,5 +13,8 @@ services:
   nginx:
     image: nginx:alpine
     volumes:
-      - ./nginx/html:/usr/share/nginx/html
+      - ./nginx/html:/usr/share/nginx/html:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d
     restart: "unless-stopped"
+    depends_on:
+      - mox

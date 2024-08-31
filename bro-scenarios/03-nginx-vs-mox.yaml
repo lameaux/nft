@@ -1,11 +1,11 @@
 name: nginx vs mox
 scenarios:
-  - name: 1k from nginx
+  - name: 1k nginx
     rps: 1000
     duration: 5s
     threads: 100
     httpRequest:
-      url: http://nginx:80/
+      url: http://nginx:80/index.html
     checks:
       - type: httpCode
         equals: 200
@@ -14,7 +14,7 @@ scenarios:
       - type: httpHeader
         name: Content-Type
         equals: text/html
-  - name: 1k from mox
+  - name: 1k mox
     rps: 1000
     duration: 5s
     threads: 100

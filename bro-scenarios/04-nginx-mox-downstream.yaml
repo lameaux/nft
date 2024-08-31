@@ -1,16 +1,16 @@
-name: nginx
+name: nginx downstream mox
 scenarios:
-  - name: 1k from index
+  - name: 1k nginx to mox
     rps: 1000
     duration: 5s
     threads: 100
     httpRequest:
-      url: http://nginx:80/
+      url: http://nginx:80/mox/index.html
     checks:
       - type: httpCode
         equals: 200
       - type: httpBody
-        contains: "Hello from nginx"
+        contains: "Hello from mox"
       - type: httpHeader
         name: Content-Type
         equals: text/html
