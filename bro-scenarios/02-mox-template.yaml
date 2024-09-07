@@ -1,7 +1,7 @@
 name: Mox Now Template
 scenarios:
-  - name: 1k from template
-    rps: 1000
+  - name: 10k from template
+    rps: 10000
     duration: 10s
     threads: 100
     httpRequest:
@@ -11,8 +11,8 @@ scenarios:
         equals: 200
       - type: httpBody
         contains: "This text is from 'template' attribute"
-  - name: 1k from template file
-    rps: 1000
+  - name: 10k from template file
+    rps: 10000
     duration: 10s
     threads: 100
     httpRequest:

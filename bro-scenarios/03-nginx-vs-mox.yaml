@@ -14,8 +14,8 @@ scenarios:
       - type: httpHeader
         name: Content-Type
         equals: text/html
-  - name: 1k mox
-    rps: 1000
+  - name: 10k mox
+    rps: 10000
     duration: 10s
     threads: 100
     httpRequest:

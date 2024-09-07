@@ -1,8 +1,8 @@
 DEBUG := false
-METRICS_PORT := 9090
-BRO_FLAGS = --skipBanner --debug=$(DEBUG) --metricsPort=$(METRICS_PORT)
+BROD_ADDR := brod:8080
+BRO_FLAGS = --skipBanner --debug=$(DEBUG) --brodAddr=$(BROD_ADDR)
 BRO_RUN = docker-compose run bro $(BRO_FLAGS)
-BACKENDS = mox nginx
+BACKENDS = brod mox nginx prometheus grafana
 
 .PHONY: all
 all: test
@@ -31,4 +31,8 @@ run-test-mox:
 run-test-nginx:
 	$(BRO_RUN) ./scenarios/03-nginx-vs-mox.yaml
 	$(BRO_RUN) ./scenarios/04-nginx-calls-mox.yaml
+
+.PHONY: run-working
+run-working:
+	$(BRO_RUN) ./scenarios/working/nginx-10k.yaml
 

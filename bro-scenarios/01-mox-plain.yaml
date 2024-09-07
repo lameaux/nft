@@ -1,7 +1,7 @@
 name: Mox Plain
 scenarios:
-  - name: 1k from body
-    rps: 1000
+  - name: 10k from body
+    rps: 10000
     duration: 10s
     threads: 100
     httpRequest:
@@ -11,8 +11,8 @@ scenarios:
         equals: 200
       - type: httpBody
         contains: "This plain text is coming from 'body' attribute"
-  - name: 1k from file
-    rps: 1000
+  - name: 10k from file
+    rps: 10000
     duration: 10s
     threads: 100
     httpRequest:
