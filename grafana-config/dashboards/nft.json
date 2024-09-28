@@ -108,7 +108,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(rate(http_requests_total{job=\"mox\"}[$__interval])) by (url)",
+          "expr": "sum(rate(http_server_duration_milliseconds_count{job=\"mox\"}[$__interval])) by (url)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -179,7 +179,7 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -209,7 +209,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[$__rate_interval])) by (le, url))",
+          "expr": "histogram_quantile(0.99, sum(rate(http_server_duration_milliseconds_bucket[$__rate_interval])) by (le, url))",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -220,6 +220,7 @@
       "type": "timeseries"
     }
   ],
+  "refresh": "5s",
   "schemaVersion": 39,
   "tags": [],
   "templating": {

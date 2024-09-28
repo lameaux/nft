@@ -1,0 +1,20 @@
+name: Mox MQ
+scenarios:
+  - name: Send messages
+    rps: 100
+    duration: 15s
+    threads: 100
+    httpRequest:
+      url: http://mox:8080/mox/rabbitmq?queue=nft
+    checks:
+      - type: httpCode
+        equals: 200
+  - name: Receive messages
+    rps: 100
+    duration: 15s
+    threads: 100
+    httpRequest:
+      url: http://mox:8080/mox/rabbitmq?queue=nft
+    checks:
+      - type: httpCode
+        equals: 200

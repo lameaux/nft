@@ -1,0 +1,20 @@
+name: Mox Sleep
+scenarios:
+  - name: Sleep 500 ms
+    rps: 100
+    duration: 60s
+    threads: 100
+    httpRequest:
+      url: http://mox:8080/mox/sleep?ms=500
+    checks:
+      - type: httpCode
+        equals: 200
+  - name: Sleep 5000 ms randomly
+    rps: 100
+    duration: 60s
+    threads: 100
+    httpRequest:
+      url: http://mox:8080/mox/sleep/random?ms=5000
+    checks:
+      - type: httpCode
+        equals: 200

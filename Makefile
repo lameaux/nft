@@ -1,7 +1,8 @@
+DOCKER_COMPOSE := docker compose
 DEBUG := false
 BROD_ADDR := brod:8080
 BRO_FLAGS = --skipBanner --debug=$(DEBUG) --brodAddr=$(BROD_ADDR)
-BRO_RUN = docker-compose run bro $(BRO_FLAGS)
+BRO_RUN = $(DOCKER_COMPOSE) run bro $(BRO_FLAGS)
 BACKENDS = brod mox nginx prometheus grafana
 SHOW_RESULTS := false
 
@@ -9,18 +10,18 @@ SHOW_RESULTS := false
 all: test
 
 .PHONY: test
-test: start-backends run-tests-all wait-for-results stop-backends
+test: start-backends run-test-all wait-for-results stop-backends
 
 .PHONY: start-backends
 start-backends:
-	docker-compose up $(BACKENDS) -d --wait
+	$(DOCKER_COMPOSE) up $(BACKENDS) -d --wait
 
 .PHONY: stop-backends
 stop-backends:
-	docker-compose down
+	$(DOCKER_COMPOSE) down
 
-.PHONY: run-tests-all
-run-tests-all: run-test-mox run-test-nginx
+.PHONY: run-test-all
+run-test-all: run-test-mox run-test-nginx
 
 .PHONY: wait-for-results
 wait-for-results:
@@ -32,18 +33,21 @@ endif
 
 .PHONY: run-test-mox
 run-test-mox:
-	$(BRO_RUN) ./scenarios/00-mox-static-json.yaml
-	$(BRO_RUN) ./scenarios/01-mox-plain.yaml
-	$(BRO_RUN) ./scenarios/02-mox-template.yaml
+	$(BRO_RUN) ./scenarios/mox/static-json.yaml
+	$(BRO_RUN) ./scenarios/mox/plain.yaml
+	$(BRO_RUN) ./scenarios/mox/template.yaml
 
 .PHONY: run-test-nginx
 run-test-nginx:
-	$(BRO_RUN) ./scenarios/03-nginx-vs-mox.yaml
-	$(BRO_RUN) ./scenarios/04-nginx-calls-mox.yaml
+	$(BRO_RUN) ./scenarios/nginx/vs-mox.yaml
+	$(BRO_RUN) ./scenarios/nginx/calls-mox.yaml
 
 
+.PHONY: run-test-mox-sleep
+run-test-mox-sleep:
+	$(BRO_RUN) ./scenarios/mox/sleep.yaml
 
-.PHONY: run-working
-run-working:
-	$(BRO_RUN) ./scenarios/working/nginx-10k.yaml
+.PHONY: run-test-nginx-10k
+run-test-nginx-10k:
+	$(BRO_RUN) ./scenarios/nginx/10k.yaml
 
