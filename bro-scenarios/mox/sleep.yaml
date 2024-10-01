@@ -2,7 +2,7 @@ name: Mox Sleep
 scenarios:
   - name: Sleep 100 ms
     rps: 1000
-    duration: 1m
+    duration: 2m
     threads: 100
     httpRequest:
       url: http://mox:8080/mox/sleep?ms=100
@@ -16,7 +16,7 @@ scenarios:
 
   - name: Random sleep 500 ms
     rps: 500
-    duration: 1m
+    duration: 2m
     threads: 100
     httpRequest:
       url: http://mox:8080/mox/sleep/random?ms=500

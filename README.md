@@ -1,25 +1,31 @@
 # NFT Examples
 
+![Screenshot](.github/bro-mox-grafana.png)
+
 Using [bro](https://github.com/lameaux/bro) and [mox](https://github.com/lameaux/mox) for non-functional testing:
 
 Make sure you have `make`, `docker` and `docker-compose` installed in your system.
 
 ```shell
-make test
+make SHOW_RESULTS=true test
 
-{"level":"info","version":"v0.0.1","build":"69d5dfb","time":"2024-08-30T17:14:40Z","message":"bro"}
-{"level":"info","configName":"nginx vs mox","configFile":"./scenarios/04-nginx-vs-mox.yaml","time":"2024-08-30T17:14:40Z","message":"config loaded"}
-{"level":"info","execution":"","time":"2024-08-30T17:14:40Z","message":"executing scenarios... press Ctrl+C (SIGINT) or send SIGTERM to terminate."}
-{"level":"info","scenario":{"name":"1k from nginx","rps":1000,"threads":100,"queueSize":100,"duration":5000},"time":"2024-08-30T17:14:40Z","message":"running scenario"}
-{"level":"info","scenario":{"name":"1k from mox","rps":1000,"threads":100,"queueSize":100,"duration":5000},"time":"2024-08-30T17:14:45Z","message":"running scenario"}
-{"level":"info","totalDuration":10007.996422,"ok":true,"time":"2024-08-30T17:14:50Z","message":"results"}
-nginx vs mox
-┌───────────────┬───────┬──────┬─────────┬────────┬─────────┬─────────┬──────────────┬──────────────┬─────┬────────┐
-│ SCENARIO      │ TOTAL │ SENT │ SUCCESS │ FAILED │ TIMEOUT │ INVALID │ LATENCY @P99 │     DURATION │ RPS │ PASSED │
-├───────────────┼───────┼──────┼─────────┼────────┼─────────┼─────────┼──────────────┼──────────────┼─────┼────────┤
-│ 1k from nginx │  5000 │ 5000 │    5000 │      0 │       0 │       0 │ 139 ms       │ 5.003642419s │ 999 │ OK     │
-│ 1k from mox   │  5000 │ 5000 │    5000 │      0 │       0 │       0 │ 24 ms        │ 5.004196919s │ 999 │ OK     │
-└───────────────┴───────┴──────┴─────────┴────────┴─────────┴─────────┴──────────────┴──────────────┴─────┴────────┘
-Total duration: 10.007996422s
+4:09PM INF bro build=82b277b version=v0.0.1
+4:09PM INF config loaded config={"name":"Mox Sleep","path":"./scenarios/mox/sleep.yaml"}
+4:09PM INF executing scenarios... press Ctrl+C (SIGINT) or send SIGTERM to terminate. parallel=false
+4:09PM INF running scenario scenario={"duration":120000,"name":"Sleep 100 ms","queueSize":100,"rps":1000,"threads":100}
+4:11PM INF running scenario scenario={"duration":120000,"name":"Random sleep 500 ms","queueSize":100,"rps":500,"threads":100}
+4:13PM INF result success=true totalDuration=243691
+Name: Mox Sleep
+Path: ./scenarios/mox/sleep.yaml
+┌─────────────────────┬────────┬─────────┬────────┬─────────┬─────────┬──────────────┬──────────┬─────┬────────┐
+│ SCENARIO            │  TOTAL │ SUCCESS │ FAILED │ TIMEOUT │ INVALID │ LATENCY @P99 │ DURATION │ RPS │ PASSED │
+├─────────────────────┼────────┼─────────┼────────┼─────────┼─────────┼──────────────┼──────────┼─────┼────────┤
+│ Sleep 100 ms        │ 113980 │  113980 │      0 │       0 │       0 │ 114 ms       │ 2m1.479s │ 938 │ true   │
+│ Random sleep 500 ms │  48000 │   48000 │      0 │       0 │       0 │ 496 ms       │ 2m2.212s │ 393 │ true   │
+└─────────────────────┴────────┴─────────┴────────┴─────────┴─────────┴──────────────┴──────────┴─────┴────────┘
+Total duration: 4m3.691s
 OK
+
+Test results in Grafana: http://0.0.0.0:3000
+Press any key to continue...
 ```
