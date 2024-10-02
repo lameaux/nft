@@ -28,6 +28,11 @@ services:
     restart: "unless-stopped"
     depends_on:
       - mox
+  golang_httpserver:
+    image: ghcr.io/lameaux/nft/apps/golang/httpserver:latest
+    ports:
+      - "8080:8080"
+    restart: "unless-stopped"
   prometheus:
     image: prom/prometheus
     container_name: prometheus
