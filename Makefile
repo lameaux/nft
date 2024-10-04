@@ -21,7 +21,7 @@ test-nginx: BACKENDS = brod mox nginx prometheus grafana
 test-nginx: start-backends run-test-mox stop-backends
 
 .PHONY: test-apps
-test-apps: BACKENDS = golang_httpserver
+test-apps: BACKENDS = golang_httpserver java_httpserver
 test-apps: BROD_ADDR =
 test-apps: start-backends run-test-apps stop-backends
 
@@ -47,6 +47,7 @@ run-test-nginx-10k:
 .PHONY: run-test-apps
 run-test-apps:
 	$(BRO_RUN) ./scenarios/apps/golang-httpserver-10k.yaml
+	$(BRO_RUN) ./scenarios/apps/java-httpserver-10k.yaml
 
 .PHONY: start-backends
 start-backends:
