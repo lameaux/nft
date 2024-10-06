@@ -1,33 +1,38 @@
-use std::net::{TcpListener, TcpStream};
-use std::thread;
-use std::io::{Read, Write, Error};
+use axum::{routing::get, Router};
+use tokio::signal;
 
-//use axum
+#[tokio::main]
+async fn main() {
+    let app = Router::new().route("/", get(|| async { "OK" }));
 
-fn handle_client(mut stream: TcpStream) -> Result<(), Error> {
-    println!("Incoming connection from: {}", stream.peer_addr()?);
-    let mut buf = [0; 512];
-    loop {
-        let bytes_read = stream.read(&mut buf)?;
-        if bytes_read == 0 { return Ok(()) }
-        stream.write(&buf[..bytes_read])?;
-    }
+    println!("Running on http://localhost:8080");
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    axum::serve(listener, app)
+    .with_graceful_shutdown(shutdown_signal())
+    .await
+    .unwrap();
 }
 
-fn main() {
-    let listener = TcpListener::bind("0.0.0.0:8080").expect("Could not bind");
+async fn shutdown_signal() {
+    let ctrl_c = async {
+        signal::ctrl_c()
+            .await
+            .expect("failed to install Ctrl+C handler");
+    };
 
-    for stream in listener.incoming() {
-        match stream {
-            Err(e) => { eprintln!("failed: {}", e) }
-            Ok(stream) => {
-                thread::spawn(move || {
-                    handle_client(stream).unwrap_or_else(|error| eprintln!("{:?}", error));
-                });
-            }
-        }
+    #[cfg(unix)]
+    let terminate = async {
+        signal::unix::signal(signal::unix::SignalKind::terminate())
+            .expect("failed to install signal handler")
+            .recv()
+            .await;
+    };
+
+    #[cfg(not(unix))]
+    let terminate = std::future::pending::<()>();
+
+    tokio::select! {
+        _ = ctrl_c => {},
+        _ = terminate => {},
     }
-
-    println!("Hello world!");
 }
-

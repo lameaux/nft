@@ -1,7 +1,8 @@
 DOCKER_COMPOSE := docker compose
 DEBUG := false
+SKIP_BANNER := true
 BROD_ADDR := brod:8080
-BRO_FLAGS = --skipBanner --debug=$(DEBUG) --brodAddr=$(BROD_ADDR)
+BRO_FLAGS = --skipBanner=$(SKIP_BANNER) --debug=$(DEBUG) --brodAddr=$(BROD_ADDR)
 BRO_RUN = $(DOCKER_COMPOSE) run bro $(BRO_FLAGS)
 BACKENDS = brod prometheus grafana
 SHOW_RESULTS := false
@@ -21,7 +22,7 @@ test-nginx: BACKENDS = brod mox nginx prometheus grafana
 test-nginx: start-backends run-test-mox stop-backends
 
 .PHONY: test-apps
-test-apps: BACKENDS = golang-stdlib java-netty java-quarkus
+test-apps: BACKENDS = golang-stdlib java-netty java-quarkus rust-axum
 test-apps: BROD_ADDR =
 test-apps: start-backends run-test-apps stop-backends
 
@@ -46,9 +47,9 @@ run-test-nginx-10k:
 
 .PHONY: run-test-apps
 run-test-apps:
-	$(BRO_RUN) ./scenarios/apps/httpserver/golang-stdlib.yaml
-	$(BRO_RUN) ./scenarios/apps/httpserver/java-netty.yaml
-	$(BRO_RUN) ./scenarios/apps/httpserver/java-quarkus.yaml
+	$(BRO_RUN) ./scenarios/apps/httpserver/benchmark/rps-1k-threads-100.yaml
+	$(BRO_RUN) ./scenarios/apps/httpserver/benchmark/rps-5k-threads-500.yaml
+	$(BRO_RUN) ./scenarios/apps/httpserver/benchmark/rps-10k-threads-1000.yaml
 
 .PHONY: start-backends
 start-backends:

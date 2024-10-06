@@ -43,6 +43,11 @@ services:
     ports:
       - "8083:8080"
     restart: "unless-stopped"
+  rust-axum:
+    image: ghcr.io/lameaux/nft/apps/httpserver/rust/axum:latest
+    ports:
+      - "8084:8080"
+    restart: "unless-stopped"
   prometheus:
     image: prom/prometheus
     container_name: prometheus

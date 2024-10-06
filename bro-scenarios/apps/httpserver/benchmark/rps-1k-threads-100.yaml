@@ -1,0 +1,48 @@
+name: 1k RPS, 100 threads
+httpClient:
+  timeout: 1s
+scenarios:
+  - name: golang stdlib
+    rps: 1000
+    duration: 15s
+    threads: 100
+    httpRequest:
+      url: http://golang-stdlib:8080/
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "OK"
+  - name: java netty
+    rps: 1000
+    duration: 15s
+    threads: 100
+    httpRequest:
+      url: http://java-netty:8080/
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "OK"
+  - name: java quarkus
+    rps: 1000
+    duration: 15s
+    threads: 100
+    httpRequest:
+      url: http://java-quarkus:8080/
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "OK"
+  - name: rust axum
+    rps: 1000
+    duration: 15s
+    threads: 100
+    httpRequest:
+      url: http://rust-axum:8080/
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "OK"

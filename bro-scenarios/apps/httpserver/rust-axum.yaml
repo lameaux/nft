@@ -1,0 +1,26 @@
+name: golang stdlib
+httpClient:
+  timeout: 1s
+scenarios:
+  - name: 10k 200 threads
+    rps: 10000
+    duration: 15s
+    threads: 200
+    httpRequest:
+      url: http://rust-axum:8080/
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "OK"
+  - name: 10k 1000 threads
+    rps: 10000
+    duration: 15s
+    threads: 1000
+    httpRequest:
+      url: http://rust-axum:8080/
+    checks:
+      - type: httpCode
+        equals: 200
+      - type: httpBody
+        contains: "OK"
