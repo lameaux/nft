@@ -1,26 +1,18 @@
-name: java quarkus
+name: java quarkus 10k
 httpClient:
   timeout: 1s
+defaults:
+  rps: 10000
+  duration: 15s
+  httpRequest:
+    url: http://java-quarkus:8080/
+  checks:
+    - type: httpCode
+      equals: 200
+    - type: httpBody
+      contains: "OK"
 scenarios:
-  - name: 10k 200 threads
-    rps: 10000
-    duration: 15s
+  - name: 200 threads
     threads: 200
-    httpRequest:
-      url: http://java-quarkus:8080/
-    checks:
-      - type: httpCode
-        equals: 200
-      - type: httpBody
-        contains: "OK"
-  - name: 10k 1000 threads
-    rps: 10000
-    duration: 15s
+  - name: 1000 threads
     threads: 1000
-    httpRequest:
-      url: http://java-quarkus:8080/
-    checks:
-      - type: httpCode
-        equals: 200
-      - type: httpBody
-        contains: "OK"

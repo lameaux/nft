@@ -46,10 +46,21 @@ run-test-nginx-10k:
 	$(BRO_RUN) ./scenarios/nginx/10k.yaml
 
 .PHONY: run-test-apps
-run-test-apps:
+run-test-apps: run-test-apps-10k
+run-test-apps: run-test-apps-benchmark
+
+.PHONY: run-test-apps-benchmark
+run-test-apps-benchmark:
 	$(BRO_RUN) ./scenarios/apps/httpserver/benchmark/rps-1k-threads-100.yaml
 	$(BRO_RUN) ./scenarios/apps/httpserver/benchmark/rps-5k-threads-500.yaml
 	$(BRO_RUN) ./scenarios/apps/httpserver/benchmark/rps-10k-threads-1000.yaml
+
+.PHONY: run-test-apps-10k
+run-test-apps-10k:
+	$(BRO_RUN) ./scenarios/apps/httpserver/golang-stdlib.yaml
+	$(BRO_RUN) ./scenarios/apps/httpserver/java-netty.yaml
+	$(BRO_RUN) ./scenarios/apps/httpserver/java-quarkus.yaml
+	$(BRO_RUN) ./scenarios/apps/httpserver/rust-axum.yaml
 
 .PHONY: start-backends
 start-backends:
