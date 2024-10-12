@@ -1,17 +1,17 @@
-FROM golang:1.22-alpine AS builder
+FROM golang:1.23-bookworm AS builder
 
-WORKDIR /
+WORKDIR /app
 
-COPY go.mod ./
-RUN go mod download
+COPY go.mod go.sum ./
+RUN go mod download && go mod verify
 
 COPY . .
 RUN go build -o httpserver ./cmd/*.go
 
-FROM alpine:latest
+FROM gcr.io/distroless/base-debian12
 
 WORKDIR /
 
-COPY --from=builder /httpserver .
+COPY --from=builder /app/httpserver .
 
 ENTRYPOINT ["/httpserver"]

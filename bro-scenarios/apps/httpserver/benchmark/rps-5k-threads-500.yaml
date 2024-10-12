@@ -1,48 +1,26 @@
 name: 5k RPS, 500 threads
+parallel: true
 httpClient:
   timeout: 1s
+defaults:
+  rps: 5000
+  duration: 60s
+  threads: 500
+  checks:
+    - type: httpCode
+      equals: 200
+    - type: httpBody
+      contains: "OK"
 scenarios:
   - name: golang stdlib
-    rps: 5000
-    duration: 30s
-    threads: 500
     httpRequest:
       url: http://golang-stdlib:8080/
-    checks:
-      - type: httpCode
-        equals: 200
-      - type: httpBody
-        contains: "OK"
   - name: java netty
-    rps: 5000
-    duration: 30s
-    threads: 500
     httpRequest:
       url: http://java-netty:8080/
-    checks:
-      - type: httpCode
-        equals: 200
-      - type: httpBody
-        contains: "OK"
   - name: java quarkus
-    rps: 5000
-    duration: 30s
-    threads: 500
     httpRequest:
       url: http://java-quarkus:8080/
-    checks:
-      - type: httpCode
-        equals: 200
-      - type: httpBody
-        contains: "OK"
   - name: rust axum
-    rps: 5000
-    duration: 30s
-    threads: 500
     httpRequest:
       url: http://rust-axum:8080/
-    checks:
-      - type: httpCode
-        equals: 200
-      - type: httpBody
-        contains: "OK"
