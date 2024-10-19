@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mox
+  labels:
+    app: mox
+spec:
+  type: ClusterIP
+  selector:
+    app: mox
+  ports:
+    - name: http
+      port: {{ .Values.ports.http }}
+      targetPort: {{ .Values.ports.http }}
+    - name: admin
+      port: {{ .Values.ports.admin }}
+      targetPort: {{ .Values.ports.admin }}
+---
+{{- if .Values.service.loadBalancer.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: mox-loadbalancer
+  labels:
+    app: mox
+spec:
+  type: LoadBalancer
+  selector:
+    app: mox
+  ports:
+    - name: http
+      port: {{ .Values.service.loadBalancer.http }}
+      targetPort: {{ .Values.ports.http }}
+    - name: admin
+      port: {{ .Values.service.loadBalancer.admin }}
+      targetPort: {{ .Values.ports.admin }}
+{{- end -}}
+

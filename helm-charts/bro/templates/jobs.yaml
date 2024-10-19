@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bro-{{ now | date "20060102150405" }}
+spec:
+  template:
+    spec:
+      containers:
+        - name: bro
+          image: ghcr.io/lameaux/bro:latest
+          args:
+            - "--debug={{ .Values.debug }}"
+            - "/scenarios/scenario.yaml"
+          volumeMounts:
+            - name: bro-scenarios
+              mountPath: /scenarios
+      volumes:
+        - name: bro-scenarios
+          configMap:
+            name: bro-scenarios
+      restartPolicy: Never

@@ -10,7 +10,7 @@ services:
     restart: "unless-stopped"
   mox:
     image: ghcr.io/lameaux/mox:latest
-    command: ["--debug"]
+    command: ["--debug", "--configPath=/config"]
     ports:
       - "8080:8080"
       - "9090:9090"

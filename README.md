@@ -2,7 +2,17 @@
 
 ![Screenshot](.github/bro-mox-grafana.png)
 
+Dashboard showing:
+ - Client Request Latency (P99)
+ - Requests Per Second (RPS)
+ - CPU Usage
+ - Memory Usage
+ - Availability
+ - CPU Throttling
+
 Using [bro](https://github.com/lameaux/bro) and [mox](https://github.com/lameaux/mox) for non-functional testing:
+
+# Running Locally with Docker
 
 Make sure you have `make`, `docker` and `docker-compose` installed in your system.
 
@@ -28,4 +38,12 @@ OK
 
 Test results in Grafana: http://0.0.0.0:3000
 Press any key to continue...
+```
+
+# Running on Kubernetes
+
+Make sure you have `kubectl` and `helm` installed.
+
+```shell
+make deploy-mox
 ```

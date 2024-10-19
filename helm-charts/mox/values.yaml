@@ -1,0 +1,10 @@
+debug: false
+accessLog: false
+ports:
+  http: 8080
+  admin: 9090
+service:
+  loadBalancer:
+    enabled: true
+    http: 8080
+    admin: 9090

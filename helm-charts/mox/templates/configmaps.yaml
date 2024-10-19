@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mox-mappings
+data:
+{{ (.Files.Glob "config/mappings/**").AsConfig | indent 2 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mox-files
+data:
+{{ (.Files.Glob "config/files/**").AsConfig | indent 2 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mox-templates
+data:
+{{ (.Files.Glob "config/templates/**").AsConfig | indent 2 }}

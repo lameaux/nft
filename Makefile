@@ -81,3 +81,15 @@ endif
 .PHONY: docker-build-apps
 docker-build-apps:
 	$(MAKE) -C apps
+
+.PHONY: deploy-mox
+deploy-mox:
+	helm upgrade --install mox ./helm-charts/mox --namespace mox --create-namespace \
+		--set debug=true \
+		--set accessLog=true \
+
+.PHONY: deploy-bro-test-mox
+deploy-bro-test-mox:
+	helm upgrade --install bro ./helm-charts/bro --namespace mox \
+		--set debug=true \
+		--set scenario="scenarios/mox/static-json.yaml" \

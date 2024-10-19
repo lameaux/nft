@@ -1,0 +1,5 @@
+ports:
+  golang-stdlib: 8081
+  java-netty: 8082
+  java-quarkus: 8083
+  rust-axum: 8084

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mox
+  labels:
+    app: mox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mox
+  template:
+    metadata:
+      labels:
+        app: mox
+    spec:
+      containers:
+        - name: mox
+          image: ghcr.io/lameaux/mox:latest
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          env:
+            - name: GOMAXPROCS
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.cpu
+          args:
+            - "--debug={{ .Values.debug }}"
+            - "--accessLog={{ .Values.accessLog }}"
+            - "--configPath=./config"
+            - "--port={{.Values.ports.http }}"
+            - "--adminPort={{.Values.ports.admin }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.ports.http }}
+            - name: admin
+              containerPort: {{ .Values.ports.admin }}
+          volumeMounts:
+            - name: mox-files
+              mountPath: /config/files
+            - name: mox-mappings
+              mountPath: /config/mappings
+            - name: mox-templates
+              mountPath: /config/templates
+      volumes:
+        - name: mox-files
+          configMap:
+            name: mox-files
+        - name: mox-mappings
+          configMap:
+            name: mox-mappings
+        - name: mox-templates
+          configMap:
+            name: mox-templates
