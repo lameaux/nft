@@ -78,6 +78,25 @@ ifeq ($(SHOW_RESULTS), true)
 	@read
 endif
 
+.PHONY: minikube-start
+minikube-start:
+	minikube start --memory=6g --bootstrapper=kubeadm --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --extra-config=scheduler.bind-address=0.0.0.0 --extra-config=controller-manager.bind-address=0.0.0.0
+	minikube tunnel
+
+.PHONY: monitoring-setup
+monitoring-setup:
+	minikube addons enable metrics-server
+
+	# kube-prometheus-stack
+	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+	helm repo update
+	helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack
+
+	# admin:prom-operator
+
+	# dashboards https://github.com/dotdc/grafana-dashboards-kubernetes
+
+
 .PHONY: docker-build-apps
 docker-build-apps:
 	$(MAKE) -C apps
@@ -85,11 +104,16 @@ docker-build-apps:
 .PHONY: deploy-mox
 deploy-mox:
 	helm upgrade --install mox ./helm-charts/mox --namespace mox --create-namespace \
-		--set debug=true \
-		--set accessLog=true \
+		--set debug=false \
+		--set accessLog=false \
+
+.PHONY: deploy-brod
+deploy-brod:
+	helm upgrade --install brod ./helm-charts/brod --namespace brod --create-namespace \
+		--set debug=true
 
 .PHONY: deploy-bro-test-mox
 deploy-bro-test-mox:
 	helm upgrade --install bro ./helm-charts/bro --namespace mox \
-		--set debug=true \
+		--set debug=false \
 		--set scenario="scenarios/mox/static-json.yaml" \

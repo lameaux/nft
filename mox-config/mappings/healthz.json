@@ -1,0 +1,13 @@
+{
+    "request": {
+      "method": "GET",
+      "url": "/healthz"
+    },
+    "response": {
+      "status": 200,
+      "json": {
+        "healthz": "OK"
+      }
+    }
+  }
+  

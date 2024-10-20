@@ -8,6 +8,18 @@ spec:
       containers:
         - name: bro
           image: ghcr.io/lameaux/bro:latest
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          env:
+            - name: GOMAXPROCS
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.cpu
           args:
             - "--debug={{ .Values.debug }}"
             - "/scenarios/scenario.yaml"

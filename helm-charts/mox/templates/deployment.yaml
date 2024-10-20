@@ -40,6 +40,18 @@ spec:
               containerPort: {{ .Values.ports.http }}
             - name: admin
               containerPort: {{ .Values.ports.admin }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
           volumeMounts:
             - name: mox-files
               mountPath: /config/files
