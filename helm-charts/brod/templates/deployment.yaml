@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brod
+  labels:
+    app: brod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: brod
+  template:
+    metadata:
+      labels:
+        app: brod
+    spec:
+      containers:
+        - name: brod
+          image: ghcr.io/lameaux/bro:latest
+          resources: {{ toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: GOMAXPROCS
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.cpu
+          command: ["/brod"]
+          args:
+            - "--debug={{ .Values.flags.debug }}"
+            - "--grpcPort={{.Values.ports.grpc }}"
+            - "--restPort={{.Values.ports.rest }}"
+          ports:
+            - name: grpc
+              containerPort: {{ .Values.ports.grpc }}
+            - name: rest
+              containerPort: {{ .Values.ports.rest }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: rest
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: rest
+            initialDelaySeconds: 5
+            periodSeconds: 5

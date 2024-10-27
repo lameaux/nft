@@ -3,25 +3,21 @@ kind: Job
 metadata:
   name: bro-{{ now | date "20060102150405" }}
 spec:
+  backoffLimit: 0
   template:
     spec:
       containers:
         - name: bro
           image: ghcr.io/lameaux/bro:latest
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "250m"
-            limits:
-              memory: "1Gi"
-              cpu: "1"
+          resources: {{ toYaml .Values.resources | nindent 12 }}
           env:
             - name: GOMAXPROCS
               valueFrom:
                 resourceFieldRef:
                   resource: limits.cpu
           args:
-            - "--debug={{ .Values.debug }}"
+            - "--debug={{ .Values.flags.debug }}"
+            - "--brodAddr={{ .Values.flags.brodAddr }}"
             - "/scenarios/scenario.yaml"
           volumeMounts:
             - name: bro-scenarios

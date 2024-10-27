@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mox
+  namespace: monitoring
+  labels:
+    app: mox
+spec:
+  endpoints:
+    - path: /metrics
+      port: admin
+      interval: 5s
+  namespaceSelector:
+    matchNames:
+      - mox
+  selector:
+    matchLabels:
+      app: mox

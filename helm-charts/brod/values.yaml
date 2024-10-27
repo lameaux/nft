@@ -1,1 +1,14 @@
-port: 8080
+flags:
+  debug: false
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "256Mi"
+    cpu: "250m"
+ports:
+  grpc: 8080
+  rest: 9090
+service:
+  type: ClusterIP

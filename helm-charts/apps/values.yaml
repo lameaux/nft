@@ -1,5 +1,18 @@
+replicas: 1
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "256Mi"
+    cpu: "250m"
 ports:
-  golang-stdlib: 8081
-  java-netty: 8082
-  java-quarkus: 8083
-  rust-axum: 8084
+  golang:
+    stdlib: 8081
+  java:
+    netty: 8082
+    quarkus: 8083
+  rust:
+    axum: 8084
+service:
+  type: LoadBalancer # ClusterIP

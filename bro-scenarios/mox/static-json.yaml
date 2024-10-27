@@ -2,8 +2,8 @@ name: Mox Static JSON
 scenarios:
   - name: 10k
     rps: 10000
-    duration: 1m
-    threads: 100
+    duration: 5m
+    threads: 200
     httpRequest:
       url: http://mox:8080/static
     checks:

@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: brod
+  namespace: monitoring
+  labels:
+    app: brod
+spec:
+  endpoints:
+    - path: /metrics
+      port: rest
+      interval: 5s
+  namespaceSelector:
+    matchNames:
+      - brod
+  selector:
+    matchLabels:
+      app: brod

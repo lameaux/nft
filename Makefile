@@ -80,40 +80,60 @@ endif
 
 .PHONY: minikube-start
 minikube-start:
-	minikube start --memory=6g --bootstrapper=kubeadm --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --extra-config=scheduler.bind-address=0.0.0.0 --extra-config=controller-manager.bind-address=0.0.0.0
+	minikube start --cpus=4 --memory=6g --bootstrapper=kubeadm \
+		--extra-config=kubelet.authentication-token-webhook=true \
+		--extra-config=kubelet.authorization-mode=Webhook \
+		--extra-config=scheduler.bind-address=0.0.0.0 \
+		--extra-config=controller-manager.bind-address=0.0.0.0
+	minikube addons enable metrics-server
+
+.PHONY: minikube-tunnel
+minikube-tunnel:
 	minikube tunnel
 
 .PHONY: monitoring-setup
 monitoring-setup:
-	minikube addons enable metrics-server
-
 	# kube-prometheus-stack
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	helm repo update
-	helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack
+	helm upgrade --install kube-prometheus-stack prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace \
+		--values monitoring/kube-prometheus-stack.yaml
 
-	# admin:prom-operator
+.PHONY: grafana-port-forward
+grafana-port-forward:
+	kubectl port-forward service/kube-prometheus-stack-grafana 3000:80 -n monitoring
 
-	# dashboards https://github.com/dotdc/grafana-dashboards-kubernetes
-
+.PHONY: prometheus-port-forward
+prometheus-port-forward:
+	kubectl port-forward svc/prometheus-operated 9091:9090 -n monitoring
 
 .PHONY: docker-build-apps
 docker-build-apps:
 	$(MAKE) -C apps
 
+.PHONY: deploy-apps
+deploy-apps:
+	helm upgrade --install apps ./helm-charts/apps --namespace apps --create-namespace \
+
 .PHONY: deploy-mox
 deploy-mox:
 	helm upgrade --install mox ./helm-charts/mox --namespace mox --create-namespace \
-		--set debug=false \
-		--set accessLog=false \
+		--set flags.debug=false \
+		--set flags.accessLog=false \
 
 .PHONY: deploy-brod
 deploy-brod:
 	helm upgrade --install brod ./helm-charts/brod --namespace brod --create-namespace \
-		--set debug=true
+		--set flags.debug=false \
 
 .PHONY: deploy-bro-test-mox
 deploy-bro-test-mox:
 	helm upgrade --install bro ./helm-charts/bro --namespace mox \
-		--set debug=false \
 		--set scenario="scenarios/mox/static-json.yaml" \
+		--set flags.debug=false \
+
+.PHONY: deploy-bro-test-golang-stdlib
+deploy-bro-test-golang-stdlib:
+	helm upgrade --install bro ./helm-charts/bro --namespace apps \
+		--set scenario="scenarios/apps/httpserver/golang-stdlib.yaml" \
+		--set flags.debug=false \

@@ -1,10 +1,18 @@
-debug: false
-accessLog: false
+flags:
+  debug: false
+  accessLog: false
+replicas: 1
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "256Mi"
+    cpu: "250m"
 ports:
   http: 8080
   admin: 9090
+  pprof: 6060
 service:
-  loadBalancer:
-    enabled: true
-    http: 8080
-    admin: 9090
+  type: LoadBalancer # ClusterIP
+

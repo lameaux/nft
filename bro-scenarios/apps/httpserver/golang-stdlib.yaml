@@ -1,18 +1,25 @@
 name: golang stdlib 10k
 httpClient:
   timeout: 1s
+  disableKeepAlive: true
 defaults:
-  rps: 10000
-  duration: 15s
   httpRequest:
-    url: http://golang-stdlib:8080/
+    url: http://golang-stdlib:8081/
   checks:
     - type: httpCode
       equals: 200
     - type: httpBody
       contains: "OK"
 scenarios:
-  - name: 200 threads
-    threads: 200
-  - name: 1000 threads
+#  - name: 100 threads, 1k RPS
+#    threads: 100
+#    rps: 1000
+#    duration: 1m
+#  - name: 1000 threads, 10k RPS
+#    threads: 1000
+#    rps: 10000
+#    duration: 1m
+  - name: 1000 threads, 20k RPS
     threads: 1000
+    rps: 20000
+    duration: 1m

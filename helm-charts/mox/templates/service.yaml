@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mox
+  labels:
+    app: mox
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: mox
+  ports:
+    - name: http
+      port: {{ .Values.ports.http }}
+      targetPort: http
+    - name: admin
+      port: {{ .Values.ports.admin }}
+      targetPort: admin
+    - name: pprof
+      port: {{ .Values.ports.pprof }}
+      targetPort: pprof
+
+
