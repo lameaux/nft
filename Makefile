@@ -86,6 +86,8 @@ minikube-start:
 		--extra-config=scheduler.bind-address=0.0.0.0 \
 		--extra-config=controller-manager.bind-address=0.0.0.0
 	minikube addons enable metrics-server
+	minikube stop
+	minikube start
 
 .PHONY: minikube-tunnel
 minikube-tunnel:

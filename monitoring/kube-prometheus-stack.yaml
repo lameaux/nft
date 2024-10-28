@@ -6,7 +6,7 @@ prometheus:
     probeSelectorNilUsesHelmValues: false
 
 grafana:
-  adminPassword: admin
+  adminPassword: secret
 
   # Provision grafana-dashboards-kubernetes
   dashboardProviders:
@@ -21,7 +21,19 @@ grafana:
           editable: true
           options:
             path: /var/lib/grafana/dashboards/grafana-dashboards-kubernetes
+        - name: 'grafana-dashboards-loadtesting'
+          orgId: 1
+          folder: 'Load Testing'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/grafana-dashboards-loadtesting
   dashboards:
+    grafana-dashboards-loadtesting:
+      loadtest:
+        url: https://raw.githubusercontent.com/lameaux/nft/main/grafana-config/dashboards/loadtest.json
+        token: ''
     grafana-dashboards-kubernetes:
       k8s-system-api-server:
         url: https://raw.githubusercontent.com/lameaux/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
