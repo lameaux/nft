@@ -96,3 +96,52 @@ spec:
               port: http
             initialDelaySeconds: 5
             periodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-lowlevel
+  labels:
+    app: golang-lowlevel
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: golang-lowlevel
+  template:
+    metadata:
+      annotations:
+        now: {{ now | date "20060102150405" | quote }}
+      labels:
+        app: golang-lowlevel
+    spec:
+      containers:
+        - name: golang-lowlevel
+          image: ghcr.io/lameaux/nft/apps/httpserver/golang/lowlevel:latest
+          resources: {{ toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: GOMAXPROCS
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.cpu
+            - name: GOMEMLIMIT
+              valueFrom:
+                resourceFieldRef:
+                  resource: requests.memory
+          args:
+            - "--port={{.Values.ports.golang.lowlevel }}"
+          ports:
+            - name: http
+              containerPort: {{.Values.ports.golang.lowlevel }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5

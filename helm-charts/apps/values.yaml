@@ -10,6 +10,7 @@ ports:
   golang:
     stdlib: 8081
     fasthttp: 8082
+    lowlevel: 8083
   java:
     netty: 8091
     quarkus: 8092

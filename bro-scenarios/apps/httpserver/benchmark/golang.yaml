@@ -19,5 +19,6 @@ scenarios:
   - name: fasthttp
     httpRequest:
       url: http://golang-fasthttp:8082/uuid
-
-
+  - name: lowlevel
+    httpRequest:
+      url: http://golang-lowlevel:8083/uuid

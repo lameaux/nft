@@ -85,6 +85,9 @@ minikube-start:
 		--extra-config=kubelet.authorization-mode=Webhook \
 		--extra-config=scheduler.bind-address=0.0.0.0 \
 		--extra-config=controller-manager.bind-address=0.0.0.0
+
+.PHONY: minikube-addons
+minikube-addons:
 	minikube addons enable metrics-server
 	minikube stop
 	minikube start
@@ -138,11 +141,3 @@ deploy-bro-test-mox:
 deploy-bro-test-golang:
 	helm upgrade --install bro ./helm-charts/bro --namespace apps \
 		--set scenario="scenarios/apps/httpserver/benchmark/golang.yaml" \
-
-.PHONY: deploy-bro-test-golang-separate
-deploy-bro-test-golang-separate:
-	helm upgrade --install bro-stdlib ./helm-charts/bro --namespace apps \
-		--set scenario="scenarios/apps/httpserver/golang/stdlib.yaml" \
-
-	helm upgrade --install bro-fasthttp ./helm-charts/bro --namespace apps \
-		--set scenario="scenarios/apps/httpserver/golang/fasthttp.yaml" \

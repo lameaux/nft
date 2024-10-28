@@ -4,6 +4,8 @@ DOCKER_BUILD := docker buildx build --platform linux/amd64,linux/arm64
 
 GOLANG_STDLIB_IMAGE := $(DOCKER_REPO)/$(DOCKER_IMAGE)/golang/stdlib:latest
 GOLANG_FASTHTTP_IMAGE := $(DOCKER_REPO)/$(DOCKER_IMAGE)/golang/fasthttp:latest
+GOLANG_LOWLEVEL_IMAGE := $(DOCKER_REPO)/$(DOCKER_IMAGE)/golang/lowlevel:latest
+
 NETTY_IMAGE := $(DOCKER_REPO)/$(DOCKER_IMAGE)/java/netty:latest
 QUARKUS_IMAGE := $(DOCKER_REPO)/$(DOCKER_IMAGE)/java/quarkus:latest
 RUST_AXUM_IMAGE := $(DOCKER_REPO)/$(DOCKER_IMAGE)/rust/axum:latest
@@ -23,6 +25,9 @@ docker-release-apps-golang:
 
 	$(DOCKER_BUILD) -t $(GOLANG_FASTHTTP_IMAGE) ./golang/fasthttp
 	docker push $(GOLANG_FASTHTTP_IMAGE)
+
+	$(DOCKER_BUILD) -t $(GOLANG_LOWLEVEL_IMAGE) ./golang/lowlevel
+	docker push $(GOLANG_LOWLEVEL_IMAGE)
 
 .PHONY: docker-release-apps-java
 docker-release-apps-java:
