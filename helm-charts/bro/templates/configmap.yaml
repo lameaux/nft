@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: bro-scenarios
+  name: bro-scenarios-{{ .Release.Name }}
 data:
   scenario.yaml: |-
 {{ .Files.Get .Values.scenario | nindent 4 }}

@@ -1,4 +1,5 @@
 scenario:
+parallelism: 1
 flags:
   debug: false
   brodAddr: brod.brod:8080

@@ -1,0 +1,23 @@
+name: golang uuid
+parallel: true
+httpClient:
+  timeout: 1s
+  disableKeepAlive: true
+defaults:
+  stages:
+    - name: ramp up 5k
+      rps: 5000
+      duration: 2m
+      threads: 100
+  checks:
+    - type: httpCode
+      equals: 200
+scenarios:
+  - name: stdlib
+    httpRequest:
+      url: http://golang-stdlib:8081/uuid
+  - name: fasthttp
+    httpRequest:
+      url: http://golang-fasthttp:8082/uuid
+
+

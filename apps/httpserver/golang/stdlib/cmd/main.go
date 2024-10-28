@@ -12,7 +12,7 @@ import (
 
 const (
 	defaultPort = 8080
-	okResponse  = "OK"
+	okResponse  = "stdlib"
 )
 
 func main() {
@@ -25,18 +25,6 @@ func main() {
 
 	http.HandleFunc("/uuid", func(w http.ResponseWriter, r *http.Request) {
 		_, _ = fmt.Fprintf(w, uuid.NewString())
-	})
-
-	http.HandleFunc("/file", func(w http.ResponseWriter, r *http.Request) {
-		_, _ = fmt.Fprintf(w, "TODO: file")
-	})
-
-	http.HandleFunc("/mox", func(w http.ResponseWriter, r *http.Request) {
-		_, _ = fmt.Fprintf(w, "TODO: mox")
-	})
-
-	http.HandleFunc("/db", func(w http.ResponseWriter, r *http.Request) {
-		_, _ = fmt.Fprintf(w, "TODO: db")
 	})
 
 	fmt.Printf("Server listening on port %d...\n", *port)

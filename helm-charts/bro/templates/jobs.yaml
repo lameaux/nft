@@ -1,8 +1,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: bro-{{ now | date "20060102150405" }}
+  name: {{ .Release.Name }}-{{ now | date "20060102150405" }}
 spec:
+  parallelism: {{ .Values.parallelism }}
   backoffLimit: 0
   template:
     spec:
@@ -25,5 +26,5 @@ spec:
       volumes:
         - name: bro-scenarios
           configMap:
-            name: bro-scenarios
+            name: bro-scenarios-{{ .Release.Name }}
       restartPolicy: Never

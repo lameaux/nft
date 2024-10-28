@@ -1,18 +1,19 @@
 replicas: 1
 resources:
   requests:
-    memory: "256Mi"
+    memory: "480Mi"
     cpu: "250m"
   limits:
-    memory: "256Mi"
+    memory: "512Mi"
     cpu: "250m"
 ports:
   golang:
     stdlib: 8081
+    fasthttp: 8082
   java:
-    netty: 8082
-    quarkus: 8083
+    netty: 8091
+    quarkus: 8092
   rust:
-    axum: 8084
+    axum: 8101
 service:
   type: LoadBalancer # ClusterIP

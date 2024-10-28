@@ -11,6 +11,8 @@ spec:
       app: brod
   template:
     metadata:
+      annotations:
+        now: {{ now | date "20060102150405" | quote }}
       labels:
         app: brod
     spec:

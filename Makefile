@@ -113,7 +113,7 @@ docker-build-apps:
 
 .PHONY: deploy-apps
 deploy-apps:
-	helm upgrade --install apps ./helm-charts/apps --namespace apps --create-namespace \
+	helm upgrade --force --install apps ./helm-charts/apps --namespace apps --create-namespace \
 
 .PHONY: deploy-mox
 deploy-mox:
@@ -129,11 +129,18 @@ deploy-brod:
 .PHONY: deploy-bro-test-mox
 deploy-bro-test-mox:
 	helm upgrade --install bro ./helm-charts/bro --namespace mox \
+		--set flags.debug=false \
 		--set scenario="scenarios/mox/static-json.yaml" \
-		--set flags.debug=false \
 
-.PHONY: deploy-bro-test-golang-stdlib
-deploy-bro-test-golang-stdlib:
+.PHONY: deploy-bro-test-golang
+deploy-bro-test-golang:
 	helm upgrade --install bro ./helm-charts/bro --namespace apps \
-		--set scenario="scenarios/apps/httpserver/golang-stdlib.yaml" \
-		--set flags.debug=false \
+		--set scenario="scenarios/apps/httpserver/benchmark/golang.yaml" \
+
+.PHONY: deploy-bro-test-golang-separate
+deploy-bro-test-golang-separate:
+	helm upgrade --install bro-stdlib ./helm-charts/bro --namespace apps \
+		--set scenario="scenarios/apps/httpserver/golang/stdlib.yaml" \
+
+	helm upgrade --install bro-fasthttp ./helm-charts/bro --namespace apps \
+		--set scenario="scenarios/apps/httpserver/golang/fasthttp.yaml" \
