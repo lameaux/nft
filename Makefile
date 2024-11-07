@@ -80,7 +80,8 @@ endif
 
 .PHONY: minikube-start
 minikube-start:
-	minikube start --cpus=4 --memory=6g --bootstrapper=kubeadm \
+	minikube start --cpus=6 --memory=10g --bootstrapper=kubeadm \
+		--cni=calico \
 		--extra-config=kubelet.authentication-token-webhook=true \
 		--extra-config=kubelet.authorization-mode=Webhook \
 		--extra-config=scheduler.bind-address=0.0.0.0 \

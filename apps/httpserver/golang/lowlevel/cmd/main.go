@@ -26,14 +26,6 @@ Content-Length: %d
 %s`
 )
 
-//http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-//	_, _ = fmt.Fprintf(w, okResponse)
-//})
-//
-//http.HandleFunc("/uuid", func(w http.ResponseWriter, r *http.Request) {
-//	_, _ = fmt.Fprintf(w, uuid.NewString())
-//})
-
 func main() {
 	port := flag.Int("port", defaultPort, "port for server")
 	flag.Parse()
@@ -70,8 +62,6 @@ func handleConnection(conn net.Conn) {
 		log.Printf("failed to read headers: %v", err)
 		return
 	}
-
-	//fmt.Printf("headers: %v\n", strings.Join(headers, ","))
 
 	handleResponse(conn, headers)
 }
